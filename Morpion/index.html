@@ -10,39 +10,86 @@
   <body>
 
     <div class="grid">
-      <div class="case"></div>
-      <div class="case"></div>
-      <div class="case"></div>
-      <div class="case"></div>
-      <div class="case"></div>
-      <div class="case"></div>
-      <div class="case"></div>
-      <div class="case"></div>
-      <div class="case"></div>
+      <div class="case" id="case0"></div>
+      <div class="case" id="case1"></div>
+      <div class="case" id="case2"></div>
+      <div class="case" id="case3"></div>
+      <div class="case" id="case4"></div>
+      <div class="case" id="case5"></div>
+      <div class="case" id="case6"></div>
+      <div class="case" id="case7"></div>
+      <div class="case" id="case8"></div>
     </div>
 
     <p div id="message"> </p>
 
   <script>
-      const cells = document.querySelectorAll(".case");
-      let joueur = "X";
+// Creation des conditions pour lesquelles le jeu est fini //
+    const listCondition = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6]
+    ]
 
+    let choixJoueurs = [];
+
+    const cells = document.querySelectorAll(".case");
+
+    let $joueur = "X";
+
+      //Affichage de X ou de O //
     function AfficherMotif(event) {
       const cell = event.target;
-        if (cell.textContent !== "") {
+      if (cell.textContent !== "") {
         return;
-       }
-      cell.textContent = joueur;
-      joueur = (joueur === "X") ? "O" : "X";
-}
-      cells.forEach(cell => cell.addEventListener("click",AfficherMotif));
+      }
 
-      const message = document.querySelector("#message");
+      // Afficher alternativement X ou O
+      cell.textContent = $joueur;
+      $joueur = ($joueur === "X") ? "O" : "X";
+      
+      ajouterChoixJoueur(cell.textContent, cell.id);  
+      verifierGagnant();
+    }
+
+    cells.forEach(cell => cell.addEventListener("click",AfficherMotif));
+
+    const message = document.querySelector("#message");
+    
+     
+    cells.forEach(cell => cell.addEventListener("click", AfficherMotif));
+    
     function AfficherMessage() {
-      message.textContent = "C'\n est au tour de " + $joueur;
-}
+      alert("C'est au tour de " + $joueur);
+    }
 
-cells.forEach(cell => cell.addEventListener("click", AfficherMotif));
+    function ajouterChoixJoueur(choix, caseId){
+      switch (caseId) {
+        case "case0":
+          choixJoueurs[0] = choix;
+          break;
+        case "case1":
+          choixJoueurs[1] = choix;
+          break;
+        case "case2":
+          choixJoueurs[2] = choix;
+          break;
+        case "case3":
+          choixJoueurs[3] = choix;
+          break;
+      }
+    }
+    
+    function verifierGagnant()
+    {
+      if( choixJoueurs[listCondition[0][0]] == "X" && choixJoueurs[listCondition[0][1]] == "X" && choixJoueurs[listCondition[0][2]] == "X")
+        console.log("Yes...");
+    }
 
 </script>
 </body>
